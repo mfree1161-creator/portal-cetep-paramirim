@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CETEP Bacia do Paramirim - Blog Oficial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Banner Principal */
+        .banner {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&h=400&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .banner h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .banner p {
+            font-size: 1.3em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Navegação */
+        .nav-container {
+            background: #2c3e50;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn.active {
+            background: #e74c3c;
+            transform: scale(1.05);
+        }
+
+        /* Conteúdo das Páginas */
+        .page {
+            display: none;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page h2 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .page h3 {
+            color: #34495e;
+            font-size: 1.6em;
+            margin: 25px 0 15px 0;
+        }
+
+        .page p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        /* Cards de Notícias */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .news-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-content h4 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .news-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        /* Linha do Tempo */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #3498db;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: white;
+            border: 4px solid #e74c3c;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content h4 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        /* Diretores */
+        .diretores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .diretor-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .diretor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .diretor-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .diretor-card h4 {
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+
+        .diretor-card p {
+            color: #ecf0f1;
+            font-size: 0.95em;
+        }
+
+        /* Galeria de Fotos */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Informações */
+        .info-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+        }
+
+        .info-box h4 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 8px 0;
+            color: #555;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list li::before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        /* Rodapé */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* Responsivo */
+        @media screen and (max-width: 768px) {
+            .banner h1 {
+                font-size: 2em;
+            }
+
+            .banner p {
+                font-size: 1em;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+            }
+
+            .left::after, .right::after {
+                left: 21px;
+            }
+
+            .right {
+                left: 0%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Banner Principal -->
+    <div class="banner">
+        <h1>CETEP Bacia do Paramirim</h1>
+        <p>Centro Territorial de Educação Profissional</p>
+        <p style="margin-top: 10px; font-style: italic;">"Educação que transforma vidas desde 1960"</p>
+    </div>
+
+    <!-- Navegação -->
+    <div class="nav-container">
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showPage('home')">🏠 Início</button>
+            <button class="nav-btn" onclick="showPage('historia')">📜 História</button>
+            <button class="nav-btn" onclick="showPage('timeline')">⏳ Linha do Tempo</button>
+            <button class="nav-btn" onclick="showPage('diretores')">👨‍🏫 Diretores</button>
+            <button class="nav-btn" onclick="showPage('noticias')">📰 Notícias</button>
+            <button class="nav-btn" onclick="showPage('informacoes')">ℹ️ Informações</button>
+            <button class="nav-btn" onclick="showPage('galeria')">📷 Galeria</button>
+        </div>
+    </div>
+
+    <!-- Página: Início -->
+    <div id="home" class="page active">
+        <h2>Bem-vindo ao CETEP Bacia do Paramirim</h2>
+        
+        <p>O <strong>Centro Territorial de Educação Profissional da Bacia do Paramirim</strong> é uma instituição de ensino referência na região, oferecendo educação de qualidade e cursos técnicos que preparam os estudantes para o mercado de trabalho.</p>
+
+        <div class="info-box">
+            <h4>📍 Localização</h4>
+            <p>Rua Dr. Manoel Vitorino, s/n – Centro – Macaúbas – BA</p>
+            <p>📞 Telefone: (77) 3473-2319</p>
+        </div>
+
+        <h3>Destaques do Colégio</h3>
+        <div class="news-grid">
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=400&h=250&fit=crop" alt="Estudantes">
+                <div class="news-content">
+                    <h4>Educação de Qualidade</h4>
+                    <p>Mais de 60 anos formando cidadãos e profissionais capacitados para o futuro.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=250&fit=crop" alt="Cursos Técnicos">
+                <div class="news-content">
+                    <h4>Cursos Técnicos</h4>
+                    <p>12 cursos técnicos disponíveis para preparar você para o mercado de trabalho.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=400&h=250&fit=crop" alt="Biblioteca">
+                <div class="news-content">
+                    <h4>Estrutura Completa</h4>
+                    <p>Biblioteca, laboratórios, quadras esportivas e muito mais para seu aprendizado.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 40px;">Sobre o CETEP</h3>
+        <p>O CETEP da Bacia do Paramirim atende 9 municípios da região, oferecendo ensino médio integrado à educação profissional. Nossa missão é proporcionar uma educação transformadora que prepare os jovens para os desafios do século XXI.</p>
+    </div>
+
+    <!-- Página: História -->
+    <div id="historia" class="page">
+        <h2>História do CETEP</h2>
+
+        <p>O <strong>Centro Territorial de Educação Profissional da Bacia do Paramirim</strong> tem uma rica história que remonta a 1960. Conheça a trajetória desta instituição que marcou gerações na região.</p>
+
+        <h3>Origens (1960-1971)</h3>
+        <p>O colégio foi implantado em <strong>18 de abril de 1960</strong> como <strong>Ginásio Estadual de Macaúbas</strong>, instituição criada pela Lei nº 1.240/59, publicada no Diário Oficial da Bahia em 31 de dezembro de 1959.</p>
+
+        <p>Em <strong>13 de outubro de 1961</strong>, o Decreto nº 18.154 criou a <strong>Escola Normal de Macaúbas</strong>, anexa ao Ginásio já existente. Em 1962, a Escola Normal recebeu sua primeira turma formada de cinco alunos que haviam concluído o curso ginasial no Instituto de Educação Anísio Teixeira, em Caetité.</p>
+
+        <div class="info-box">
+            <h4>📚 Período de Destaque</h4>
+            <p>Durante aproximadamente duas décadas, Macaúbas foi sede da educação regional, atraindo jovens das cidades vizinhas que vinham continuar seus estudos, após a conclusão do antigo curso primário, ou em busca de habilitação para o magistério.</p>
+        </div>
+
+        <h3>Colégio Estadual Aloysio Short (1971-2009)</h3>
+        <p>Em <strong>1971</strong>, a instituição recebeu a denominação de <strong>Colégio Estadual Aloysio Short – CEAS</strong> – e, como tal, atravessou três décadas de história.</p>
+
+        <p>No final dos anos de 1990, o colégio passou a oferecer o <strong>Curso Científico</strong>, ampliando suas opções de ensino para os estudantes da região.</p>
+
+        <h3>Transformação em CETEP (2009 - Atualidade)</h3>
+        <p>Em <strong>2008</strong> foram implantados os Cursos Técnicos em Vendas e em Meio Ambiente, o que resultou na transformação da unidade escolar em <strong>Centro Territorial de Educação Profissional da Bacia do Paramirim</strong> pela Portaria 8.677/2009, publicada no Diário Oficial em 17 de abril de 2009.</p>
+
+        <p>Hoje, o CETEP é uma escola de porte especial com abrangência legal em 9 municípios, oferecendo 12 cursos Técnicos e o curso Normal, consolidando-se como referência em educação profissional na região.</p>
+
+        <div class="info-box">
+            <h4>🏆 Marco Importante</h4>
+            <p>A transformação em CETEP representou um marco na educação profissional da região, permitindo que jovens de toda a Bacia do Paramirim tivessem acesso a cursos técnicos de qualidade sem precisar se deslocar para outras cidades.</p>
+        </div>
+    </div>
+
+    <!-- Página: Linha do Tempo -->
+    <div id="timeline" class="page">
+        <h2>Linha do Tempo</h2>
+        <p>Confira os principais marcos históricos do CETEP Bacia do Paramirim ao longo de mais de 60 anos de existência.</p>
+
+        <div class="timeline">
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h4>1960</h4>
+                    <p>Fundação como Ginásio Estadual de Macaúbas em 18 de abril, criado pela Lei nº 1.240/59.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h4>1961</h4>
+                    <p>Criação da Escola Normal de Macaúbas pelo Decreto nº 18.154, em 13 de outubro.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h4>1962</h4>
+                    <p>Primeira turma formada da Escola Normal, com cinco alunos vindos do Instituto de Educação Anísio Teixeira (Caetité).</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h4>1971</h4>
+                    <p>Instituição recebe a denominação de Colégio Estadual Aloysio Short – CEAS.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h4>Final dos anos 1990</h4>
+                    <p>Implantação do Curso Científico, ampliando as opções de ensino médio.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h4>2008</h4>
+                    <p>Implantação dos primeiros Cursos Técnicos: Vendas e Meio Ambiente.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <h4>2009</h4>
+                    <p>Transformação oficial em CETEP pela Portaria 8.677/2009, em 17 de abril.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <h4>Atualmente</h4>
+                    <p>Oferece 12 cursos técnicos e atende 9 municípios da Bacia do Paramirim.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página: Diretores -->
+    <div id="diretores" class="page">
+        <h2>Diretores do CETEP</h2>
+        <p>Conheça os gestores que conduziram e conduzem o CETEP Bacia do Paramirim ao longo de sua história.</p>
+
+        <div class="diretores-grid">
+            <div class="diretor-card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop" alt="Diretor Atual">
+                <h4>Prof. Alan José Alcântara de Figueiredo</h4>
+                <p><strong>Diretor Geral</strong></p>
+                <p>Gestão: 1991 - Atual</p>
+                <p style="margin-top: 10px; font-size: 0.9em;">Lidera a instituição há mais de três décadas, acompanhando toda a transformação do CEAS em CETEP.</p>
+            </div>
+
+            <div class="diretor-card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop" alt="Vice-Diretora">
+                <h4>Maria Inez Silva Santos Dias</h4>
+                <p><strong>Vice-Diretora</strong></p>
+                <p>Gestão: Atual</p>
+                <p style="margin-top: 10px; font-size: 0.9em;">Atua na gestão administrativa e pedagógica da instituição.</p>
+            </div>
+
+            <div class="diretor-card">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop" alt="Diretor Histórico">
+                <h4>Diretores Anteriores</h4>
+                <p><strong>Gestões Anteriores</strong></p>
+                <p>1960 - 1991</p>
+                <p style="margin-top: 10px; font-size: 0.9em;">Diversos educadores dedicados que construíram a base do colégio durante as fases de Ginásio e CEAS.</p>
+            </div>
+        </div>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <h4>📞 Contato da Direção</h4>
+            <p><strong>Endereço:</strong> Rua Dr. Manoel Vitorino, s/n – Centro – Macaúbas – BA</p>
+            <p><strong>Telefone:</strong> (77) 3473-2319</p>
+            <p><strong>Horário de Atendimento:</strong> Segunda a Sexta, 7h às 17h</p>
+        </div>
+    </div>
+
+    <!-- Página: Notícias -->
+    <div id="noticias" class="page">
+        <h2>Notícias e Atualizações</h2>
+        <p>Fique por dentro das últimas novidades, eventos e conquistas do CETEP Bacia do Paramirim.</p>
+
+        <div class="news-grid">
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=250&fit=crop" alt="Matrículas">
+                <div class="news-content">
+                    <h4>Matrículas Abertas 2026</h4>
+                    <p class="news-date">📅 09 de Setembro, 2026</p>
+                    <p>Estão abertas as matrículas para os cursos técnicos de 2026. Garanta sua vaga!</p>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400&h=250&fit=crop" alt="Eventos">
+                <div class="news-content">
+                    <h4>Feira de Ciências 2026</h4>
+                    <p class="news-date">📅 05 de Setembro, 2026</p>
+                    <p>Alunos apresentam projetos inovadores na feira anual de ciências do colégio.</p>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=250&fit=crop" alt="Cursos">
+                <div class="news-content">
+                    <h4>Novos Cursos Técnicos</h4>
+                    <p class="news-date">📅 01 de Setembro, 2026</p>
+                    <p>CETEP amplia oferta com novos cursos técnicos para atender demandas regionais.</p>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&h=250&fit=crop" alt="Parcerias">
+                <div class="news-content">
+                    <h4>Parcerias com Empresas</h4>
+                    <p class="news-date">📅 28 de Agosto, 2026</p>
+                    <p>Colégio firma parcerias para estágios e empregabilidade dos alunos.</p>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=400&h=250&fit=crop" alt="Esportes">
+                <div class="news-content">
+                    <h4>Campeonato Interestudantil</h4>
+                    <p class="news-date">📅 20 de Agosto, 2026</p>
+                    <p>Equipes do CETEP se destacam em campeonato regional de esportes.</p>
+                </div>
+            </div>
+
+            <div class="news-card">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=250&fit=crop" alt="Tecnologia">
+                <div class="news-content">
+                    <h4> laboratórios Modernizados</h4>
+                    <p class="news-date">📅 15 de Agosto, 2026</p>
+                    <p>Investimento em tecnologia beneficia alunos dos cursos técnicos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <h4>📢 Fique Atento</h4>
+            <p>As notícias são atualizadas regularmente. Acompanhe também nossas redes sociais e murais do colégio para mais informações!</p>
+        </div>
+    </div>
+
+    <!-- Página: Informações -->
+    <div id="informacoes" class="page">
+        <h2>Informações Úteis</h2>
+        <p>Tudo o que você precisa saber sobre o CETEP Bacia do Paramirim em um só lugar.</p>
+
+        <div class="info-box">
+            <h4>📍 Dados da Instituição</h4>
+            <ul class="info-list">
+                <li><strong>Nome:</strong> Centro Territorial de Educação Profissional da Bacia do Paramirim</li>
+                <li><strong>Código INEP:</strong> 29208297</li>
+                <li><strong>Endereço:</strong> Rua Dr. Manoel Vitorino, s/n – Centro – Macaúbas – BA</li>
+                <li><strong>CEP:</strong> 46.500-000</li>
+                <li><strong>Telefone:</strong> (77) 3473-2319</li>
+                <li><strong>Localização:</strong> Urbana</li>
+                <li><strong>Dependência Administrativa:</strong> Estadual</li>
+            </ul>
+        </div>
+
+        <h3>Cursos Oferecidos</h3>
+        <div class="info-box">
+            <h4>🎓 Cursos Técnicos</h4>
+            <ul class="info-list">
+                <li>Técnico em Vendas</li>
+                <li>Técnico em Meio Ambiente</li>
+                <li>Técnico em Enfermagem</li>
+                <li>Técnico em Administração</li>
+                <li>Técnico em Contabilidade</li>
+                <li>Técnico em Informática</li>
+                <li>Técnico em Segurança do Trabalho</li>
+                <li>Técnico em Recursos Humanos</li>
+                <li>Técnico em Logística</li>
+                <li>Técnico em Turismo</li>
+                <li>Técnico em Agricultura</li>
+                <li>Técnico em Pecuária</li>
+            </ul>
+        </div>
+
+        <h3>Área de Abrangência</h3>
+        <div class="info-box">
+            <h4>🗺️ Municípios Atendidos</h4>
+            <p>O CETEP atende legalmente 9 municípios da Bacia do Paramirim:</p>
+            <ul class="info-list">
+                <li>Macaúbas (sede)</li>
+                <li>Ibipitanga</li>
+                <li>Botuporã</li>
+                <li>Novo Horizonte</li>
+                <li>Tanque Novo</li>
+                <li>Paramirim</li>
+                <li>Érico Cardoso</li>
+                <li>Dom Basílio</li>
+                <li>Rio do Antônio</li>
+            </ul>
+        </div>
+
+        <h3>Horários de Funcionamento</h3>
+        <div class="info-box">
+            <h4>⏰ Secretaria</h4>
+            <ul class="info-list">
+                <li>Segunda a Sexta: 7h às 17h</li>
+                <li>Sábado: 8h às 12h (mediante agendamento)</li>
+            </ul>
+        </div>
+
+        <h3>Documentação Necessária</h3>
+        <div class="info-box">
+            <h4>📄 Para Matrícula</h4>
+            <ul class="info-list">
+                <li>RG e CPF do aluno e responsável</li>
+                <li>Comprovante de residência</li>
+                <li>Histórico escolar ou declaração de transferência</li>
+                <li>2 fotos 3x4</li>
+                <li>Certidão de nascimento ou casamento</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Página: Galeria -->
+    <div id="galeria" class="page">
+        <h2>Galeria de Fotos</h2>
+        <p>Conheça um pouco mais da estrutura e do dia a dia do CETEP Bacia do Paramirim.</p>
+
+        <h3>Estrutura do Colégio</h3>
+        <div class="gallery">
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop" alt="Fachada">
+            <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop" alt="Sala de Aula">
+            <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=400&h=300&fit=crop" alt="Biblioteca">
+            <img src="https://images.unsplash.com/photo-1576267423048-15c0040fec78?w=400&h=300&fit=crop" alt="Laboratório">
+        </div>
+
+        <h3 style="margin-top: 30px;">Eventos e Atividades</h3>
+        <div class="gallery">
+            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400&h=300&fit=crop" alt="Formatura">
+            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400&h=300&fit=crop" alt="Feira de Ciências">
+            <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?w=400&h=300&fit=crop" alt="Esportes">
+            <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&h=300&fit=crop" alt="Eventos Culturais">
+        </div>
+
+        <h3 style="margin-top: 30px;">Estudantes e Professores</h3>
+        <div class="gallery">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop" alt="Estudantes">
+            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=400&h=300&fit=crop" alt="Professores">
+            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop" alt="Aulas Práticas">
+            <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=400&h=300&fit=crop" alt="Grupo de Estudos">
+        </div>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <h4>📷 Envie Suas Fotos</h4>
+            <p>Tem fotos do CETEP que gostaria de ver aqui? Envie para a secretaria do colégio ou marque-nos nas redes sociais!</p>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2026 CETEP Bacia do Paramirim - Todos os direitos reservados</p>
+        <p style="margin-top: 10px;">Rua Dr. Manoel Vitorino, s/n – Centro – Macaúbas – BA | (77) 3473-2319</p>
+    </footer>
+
+    <!-- Script para Navegação -->
+    <script>
+        function showPage(pageId) {
+            // Remove active class from all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
